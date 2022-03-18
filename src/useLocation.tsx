@@ -1,5 +1,5 @@
 // http://loc.geopunt.be/v4/location?latlon=51.306532,4.4054908
-const URL = 'http://loc.geopunt.be/v4/location';
+const URL = 'https://loc.geopunt.be/v4/location';
 
 import { useState, useEffect } from 'react';
 
