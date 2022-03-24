@@ -1,10 +1,17 @@
+import { useControls } from 'leva';
 import { Coords } from './Coords';
 import { Location } from './Location';
-import { usePosition } from './usePosition';
+import { useCurrentPosition } from './useCurrenPosition';
 
-export const Position: React.FC = () => {
-  const position = usePosition(true, { enableHighAccuracy: true });
-  const { latitude, longitude }: Coords = position;
+export const Position = () => {
+  const currentPosition = useCurrentPosition(true, { enableHighAccuracy: true });
+  const [
+    {
+      Position: [latitude, longitude],
+    },
+  ] = useControls(() => ({
+    Position: [currentPosition.latitude || 0, currentPosition.longitude || 0],
+  }));
 
   return (
     <details open>
@@ -21,7 +28,7 @@ export const Position: React.FC = () => {
         {latitude && longitude && (
           <li>
             <label>Location</label>
-            <Location latitude={latitude} longitude={longitude} />
+            <Location latitude={currentPosition.latitude!} longitude={currentPosition.longitude!} />
           </li>
         )}
       </ul>

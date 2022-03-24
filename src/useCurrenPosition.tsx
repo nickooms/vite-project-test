@@ -15,7 +15,7 @@ type Position = {
   timestamp: number;
 };
 
-export const usePosition = (watch = false, options = DEFAULT_OPTIONS) => {
+export const useCurrentPosition = (watch = false, options = DEFAULT_OPTIONS) => {
   const { enableHighAccuracy, timeout, maximumAge } = options;
 
   const [position, setPosition] = useState<Position | {}>({});
