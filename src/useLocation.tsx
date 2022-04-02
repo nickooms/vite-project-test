@@ -1,21 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { LocationType } from './LocationType';
-import { Point } from './Point';
+import { Housenumber } from './Housenumber';
 
 const URL = 'https://loc.geopunt.be/v4/location';
-
-interface Housenumber {
-  Municipality: string;
-  Zipcode: number;
-  Thoroughfarename: string;
-  Housenumber: number;
-  ID: number;
-  FormattedAddress: string;
-  Location: Point;
-  LocationType: LocationType;
-  LowerLeft: Point;
-  UpperRight: Point;
-}
 
 interface LocationResponse {
   LocationResult: Housenumber[];

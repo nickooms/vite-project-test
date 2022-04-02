@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useLocation } from './useLocation';
 import styles from './Position.module.css';
 import './App.css';
-import { Label } from './LabelProps';
-import { Text } from './TextProps';
+import { TextFieldProps, TextFieldFactory } from './TextFieldProps';
+
 interface LocationProps {
   latitude: number;
   longitude: number;
@@ -11,6 +11,13 @@ interface LocationProps {
 
 export const Location: React.FC<LocationProps> = ({ latitude, longitude }) => {
   const { location } = useLocation({ latitude, longitude });
+
+  const [form, setForm] = React.useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   const onUpdateField: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const nextFormState = {
       ...form,
@@ -23,26 +30,28 @@ export const Location: React.FC<LocationProps> = ({ latitude, longitude }) => {
     e.preventDefault();
     alert(JSON.stringify(form, null, 2));
   };
-  const [form, setForm] = React.useState({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+
+  const TextField: React.FC<TextFieldProps> = TextFieldFactory(onUpdateField);
+
+  console.log(location);
+
   return (
-    <form className={styles.form} onSubmit={onSubmitForm}>
-      <div className={styles.formGroup}>
-        <Label>FormattedAddress</Label>
-        <Text onChange={onUpdateField}>{location?.FormattedAddress}</Text>
-      </div>
-      <div className={styles.formGroup}>
-        <Label>Municipality</Label>
-        <Text onChange={onUpdateField}>{location?.Municipality}</Text>
-      </div>
-      {/* <div className={styles.formActions}>
-          <button className={styles.formSubmitBtn} type="submit">
-            Login
-          </button>
-        </div> */}
-    </form>
+    <details open>
+      <summary>Location</summary>
+      {location && (
+        <form className={styles.form} onSubmit={onSubmitForm}>
+          <TextField label="Formatted Address">{location.FormattedAddress}</TextField>
+          <TextField label="Municipality">{location.Municipality}</TextField>
+          <TextField label="Zipcode">{location.Zipcode}</TextField>
+          <TextField label="Thoroughfarename">{location.Thoroughfarename}</TextField>
+          <TextField label="Housenumber">{location.Housenumber}</TextField>
+          <TextField label="ID">{location.ID}</TextField>
+          {/* <TextField label="Lower Left Latitude">{location.BoundingBox.LowerLeft.Lat_WGS84}</TextField>
+          <TextField label="Lower Left Longitude">{location.BoundingBox.LowerLeft.Lon_WGS84}</TextField>
+          <TextField label="Upper Right Latitude">{location.BoundingBox.UpperRight.Lat_WGS84}</TextField>
+          <TextField label="Upper Right Longitude">{location.BoundingBox.UpperRight.Lon_WGS84}</TextField> */}
+        </form>
+      )}
+    </details>
   );
 };
