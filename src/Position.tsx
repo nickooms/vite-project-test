@@ -2,11 +2,10 @@ import * as React from 'react';
 import { useControls } from 'leva';
 import { Location } from './Location';
 import { useCurrentPosition } from './useCurrenPosition';
+import { TextFieldProps, TextFieldFactory } from './TextFieldProps';
 import styles from './Position.module.css';
 import './App.css';
-// import { Label } from './LabelProps';
-// import { Text } from './TextProps';
-import { TextFieldProps, TextFieldFactory } from './TextFieldProps';
+import { Objects } from './Objects';
 
 export const Position = () => {
   const currentPosition = useCurrentPosition(true, { enableHighAccuracy: true });
@@ -24,10 +23,10 @@ export const Position = () => {
     confirmPassword: '',
   });
 
-  const onUpdateField: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const onUpdateField: React.ChangeEventHandler<HTMLInputElement> = ({ currentTarget: { name, value } }) => {
     const nextFormState = {
       ...form,
-      [e.currentTarget.name]: e.currentTarget.value,
+      [name]: value,
     };
     setForm(nextFormState);
   };
@@ -46,18 +45,13 @@ export const Position = () => {
         <form className={styles.form} onSubmit={onSubmitForm}>
           <TextField label="Latitude">{currentPosition.latitude}</TextField>
           <TextField label="Longitude">{currentPosition.longitude}</TextField>
-          {/* <div className={styles.formGroup}>
-            <Label>Latitude</Label>
-            <Text onChange={onUpdateField}>{currentPosition.latitude}</Text>
-          </div>
-          <div className={styles.formGroup}>
-            <Label>Longitude</Label>
-            <Text onChange={onUpdateField}>{currentPosition.longitude}</Text>
-          </div> */}
         </form>
       </details>
       {currentPosition.latitude && currentPosition.longitude && (
-        <Location latitude={currentPosition.latitude!} longitude={currentPosition.longitude!} />
+        <>
+          <Objects latitude={currentPosition.latitude!} longitude={currentPosition.longitude!} />
+          <Location latitude={currentPosition.latitude!} longitude={currentPosition.longitude!} />
+        </>
       )}
     </>
   );

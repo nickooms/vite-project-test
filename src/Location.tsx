@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useLocation } from './useLocation';
+import { useControls } from 'leva';
+import { TextFieldProps, TextFieldFactory } from './TextFieldProps';
 import styles from './Position.module.css';
 import './App.css';
-import { TextFieldProps, TextFieldFactory } from './TextFieldProps';
 
 interface LocationProps {
   latitude: number;
@@ -11,6 +12,15 @@ interface LocationProps {
 
 export const Location: React.FC<LocationProps> = ({ latitude, longitude }) => {
   const { location } = useLocation({ latitude, longitude });
+
+  /* const controls = useControls('Location', {
+    formattedAddress: location?.FormattedAddress ?? '',
+    municipality: location?.Municipality ?? '',
+    zipcode: location?.Zipcode ?? '',
+    thoroughfarename: location?.Thoroughfarename ?? '',
+    housenumber: location?.Housenumber ?? '',
+    id: location?.ID ?? '',
+  }); */
 
   const [form, setForm] = React.useState({
     email: '',
@@ -46,10 +56,6 @@ export const Location: React.FC<LocationProps> = ({ latitude, longitude }) => {
           <TextField label="Thoroughfarename">{location.Thoroughfarename}</TextField>
           <TextField label="Housenumber">{location.Housenumber}</TextField>
           <TextField label="ID">{location.ID}</TextField>
-          {/* <TextField label="Lower Left Latitude">{location.BoundingBox.LowerLeft.Lat_WGS84}</TextField>
-          <TextField label="Lower Left Longitude">{location.BoundingBox.LowerLeft.Lon_WGS84}</TextField>
-          <TextField label="Upper Right Latitude">{location.BoundingBox.UpperRight.Lat_WGS84}</TextField>
-          <TextField label="Upper Right Longitude">{location.BoundingBox.UpperRight.Lon_WGS84}</TextField> */}
         </form>
       )}
     </details>
