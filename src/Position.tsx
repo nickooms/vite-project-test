@@ -5,13 +5,12 @@ import { useCurrentPosition } from './useCurrenPosition';
 import { TextFieldProps, TextFieldFactory } from './TextFieldProps';
 import styles from './Position.module.css';
 import './App.css';
-import { Objects } from './Objects';
 
 export const Position = () => {
   const currentPosition = useCurrentPosition(true, { enableHighAccuracy: true });
   const [
     {
-      Position: [latitude, longitude],
+      Position: [x, y],
     },
   ] = useControls(() => ({
     Position: [currentPosition.latitude || 0, currentPosition.longitude || 0],
@@ -48,10 +47,7 @@ export const Position = () => {
         </form>
       </details>
       {currentPosition.latitude && currentPosition.longitude && (
-        <>
-          <Objects latitude={currentPosition.latitude!} longitude={currentPosition.longitude!} />
-          <Location latitude={currentPosition.latitude!} longitude={currentPosition.longitude!} />
-        </>
+        <Location latitude={currentPosition.latitude!} longitude={currentPosition.longitude!} />
       )}
     </>
   );

@@ -4,6 +4,7 @@ import { useControls } from 'leva';
 import { TextFieldProps, TextFieldFactory } from './TextFieldProps';
 import styles from './Position.module.css';
 import './App.css';
+import { Objects } from './Objects';
 
 interface LocationProps {
   latitude: number;
@@ -49,14 +50,17 @@ export const Location: React.FC<LocationProps> = ({ latitude, longitude }) => {
     <details open>
       <summary>Location</summary>
       {location && (
-        <form className={styles.form} onSubmit={onSubmitForm}>
-          <TextField label="Formatted Address">{location.FormattedAddress}</TextField>
-          <TextField label="Municipality">{location.Municipality}</TextField>
-          <TextField label="Zipcode">{location.Zipcode}</TextField>
-          <TextField label="Thoroughfarename">{location.Thoroughfarename}</TextField>
-          <TextField label="Housenumber">{location.Housenumber}</TextField>
-          <TextField label="ID">{location.ID}</TextField>
-        </form>
+        <>
+          <Objects x={location.Location.X_Lambert72} y={location.Location.Y_Lambert72!} />
+          <form className={styles.form} onSubmit={onSubmitForm}>
+            <TextField label="Formatted Address">{location.FormattedAddress}</TextField>
+            <TextField label="Municipality">{location.Municipality}</TextField>
+            <TextField label="Zipcode">{location.Zipcode}</TextField>
+            <TextField label="Thoroughfarename">{location.Thoroughfarename}</TextField>
+            <TextField label="Housenumber">{location.Housenumber}</TextField>
+            <TextField label="ID">{location.ID}</TextField>
+          </form>
+        </>
       )}
     </details>
   );
